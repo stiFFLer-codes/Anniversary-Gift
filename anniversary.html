@@ -572,7 +572,7 @@ section {
 <!-- 8. THE QUESTION -->
 <section class="question-section">
   <div class="q-build">Final scene. No overthinking.</div>
-  <h2 class="q-final">Ready for forever-forever with me? 💙</h2>
+  <h2 class="q-final">Ready to annoy each other for the rest of our lives? 💙</h2>
   <div class="btn-row">
     <button class="btn-yes" id="btnYes">Signed and approved 💙</button>
     <button class="btn-no" id="btnNo">Buffering...</button>
@@ -792,9 +792,9 @@ const btnYes = document.getElementById('btnYes');
 let dodges = 0;
 
 function dodgeNo(e) {
-  if(dodges >= 3) return;
+  if(dodges >= 10) return;
   dodges++;
-  if(dodges >= 3) {
+  if(dodges >= 10) {
     btnNo.style.opacity = 0;
     setTimeout(() => { btnNo.style.display = 'none'; document.getElementById('gaveUp').style.display = 'block'; }, 300);
     return;
