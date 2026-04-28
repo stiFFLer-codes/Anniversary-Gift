@@ -133,6 +133,98 @@ section {
 @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 @keyframes fadeIn { to { opacity: 1; } }
 
+/* Section 1.5: Infinite Photo Strip */
+.infinite-strip-section {
+  padding: 80px 0 40px;
+  background-color: var(--bg-deep);
+  display: block;
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.infinite-strip-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.infinite-strip-title {
+  font-family: 'Pacifico', cursive;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  margin-bottom: 50px;
+}
+.infinite-strip-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.strip-fade {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 120px;
+  z-index: 20;
+  pointer-events: none;
+}
+.strip-fade-left {
+  left: 0;
+  background: linear-gradient(to right, var(--bg-deep), transparent);
+}
+.strip-fade-right {
+  right: 0;
+  background: linear-gradient(to left, var(--bg-deep), transparent);
+}
+.strip-track {
+  display: flex;
+}
+.strip-track:hover .strip-content {
+  animation-play-state: paused;
+}
+.strip-content {
+  display: flex;
+  gap: 16px;
+  padding-right: 16px;
+  flex-shrink: 0;
+}
+.track-left {
+  animation: scrollLeft 35s linear infinite;
+}
+.track-right {
+  animation: scrollRight 28s linear infinite;
+}
+.strip-img {
+  height: 240px;
+  width: auto;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, border 0.3s ease;
+  border: 1.5px solid transparent;
+  object-fit: cover;
+  cursor: pointer;
+}
+.strip-img:hover {
+  transform: scale(1.04);
+  border: 1.5px solid rgba(59,130,196,0.5);
+  z-index: 10;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+@keyframes scrollRight {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0); }
+}
+
+@media (max-width: 600px) {
+  .strip-img { height: 180px; }
+  .strip-fade { width: 60px; }
+}
+
 /* Section 2: Film Strip */
 .film-strip-section {
   background: #050a14;
@@ -428,6 +520,63 @@ section {
   <div class="scroll-arrow">↓</div>
 </section>
 
+<!-- 1.5 INFINITE STRIP GALLERY -->
+<section class="infinite-strip-section" id="infiniteStrip">
+  <h2 class="infinite-strip-title">730 days of us 💙</h2>
+  <div class="infinite-strip-wrapper">
+    <div class="strip-fade strip-fade-left"></div>
+    <div class="strip-fade strip-fade-right"></div>
+    
+    <!-- Row 1: Left -->
+    <div class="strip-track">
+      <div class="strip-content track-left">
+        <img src="IMG-20240628-WA0012~2.jpg" class="strip-img">
+        <img src="Jaipur wali yaadein.jpg" class="strip-img">
+        <img src="Navratri.jpg" class="strip-img">
+        <img src="cutu us.jpg" class="strip-img">
+        <img src="fav pic.jpg" class="strip-img">
+        <img src="quirky us.jpg" class="strip-img">
+        <img src="start.jpg" class="strip-img">
+        <img src="us having fun.jpg" class="strip-img">
+      </div>
+      <div class="strip-content track-left">
+        <img src="IMG-20240628-WA0012~2.jpg" class="strip-img">
+        <img src="Jaipur wali yaadein.jpg" class="strip-img">
+        <img src="Navratri.jpg" class="strip-img">
+        <img src="cutu us.jpg" class="strip-img">
+        <img src="fav pic.jpg" class="strip-img">
+        <img src="quirky us.jpg" class="strip-img">
+        <img src="start.jpg" class="strip-img">
+        <img src="us having fun.jpg" class="strip-img">
+      </div>
+    </div>
+    
+    <!-- Row 2: Right -->
+    <div class="strip-track">
+      <div class="strip-content track-right">
+        <img src="us having fun.jpg" class="strip-img">
+        <img src="start.jpg" class="strip-img">
+        <img src="quirky us.jpg" class="strip-img">
+        <img src="fav pic.jpg" class="strip-img">
+        <img src="cutu us.jpg" class="strip-img">
+        <img src="Navratri.jpg" class="strip-img">
+        <img src="Jaipur wali yaadein.jpg" class="strip-img">
+        <img src="IMG-20240628-WA0012~2.jpg" class="strip-img">
+      </div>
+      <div class="strip-content track-right">
+        <img src="us having fun.jpg" class="strip-img">
+        <img src="start.jpg" class="strip-img">
+        <img src="quirky us.jpg" class="strip-img">
+        <img src="fav pic.jpg" class="strip-img">
+        <img src="cutu us.jpg" class="strip-img">
+        <img src="Navratri.jpg" class="strip-img">
+        <img src="Jaipur wali yaadein.jpg" class="strip-img">
+        <img src="IMG-20240628-WA0012~2.jpg" class="strip-img">
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 2. FILM STRIP GALLERY -->
 <section class="film-strip-section">
   <h2 class="film-strip-title">Our Reel</h2>
@@ -697,11 +846,11 @@ window.addEventListener('scroll', () => {
   }
 });
 
-// --- Letter Reveal ---
+// --- Letter Reveal & Strip Reveal ---
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if(entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('visible'), entry.target.dataset.delay);
+      setTimeout(() => entry.target.classList.add('visible'), entry.target.dataset.delay || 0);
     }
   });
 }, {threshold: 0.1});
@@ -709,6 +858,8 @@ document.querySelectorAll('.letter-p').forEach((p, i) => {
   p.dataset.delay = i * 500;
   observer.observe(p);
 });
+const infiniteStrip = document.getElementById('infiniteStrip');
+if(infiniteStrip) observer.observe(infiniteStrip);
 
 // --- Quiz ---
 const questions = [
